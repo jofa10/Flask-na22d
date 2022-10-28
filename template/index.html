@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+
+   
+        {% for mat in matsedel %}
+
+        <div id="mat2" >
+            <h1 style="text-align:center; padding-left: 3%; ">{{ mat[3] }}</h1><h2 style="text-align:center; padding-left: 8.5%; width: 80%;">{{ mat[0][0] }}</h2>
+            
+            <h2 style="text-align:center; padding-left: 8.5%;">{{ mat[0][1] }}</h2>
+        </div>
+
+        {% endfor %}
+    
+    
+    
+{% endblock %}

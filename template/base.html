@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sw">
+
+<head>
+  <script src="static\javascript.js"></script>
+  <title>NA22D</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+
+  <header id="header">
+    <h1>NA22D</h1>
+  </header>
+
+  <div class="topnav" id="navbar">
+    <a href="#schema">Schema visare</a>
+    <a href="#kalender">Kalender</a>
+    <a href="#mat2">Matsedel</a>
+    <a class="active" href="#header">NA22D</a>    
+  </div>
+  
+
+  {% block body %}{% endblock %}
+<div id="wrap">
+  <iframe id="kalender" title="Kalender" src="https://calendar.google.com/calendar/embed?height=800&wkst=2&bgcolor=%23f4f4f4&ctz=Europe%2FBerlin&mode=WEEK&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=1&showTz=0&src=Y19jbGFzc3Jvb20yMzEzMDNiOEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb205NTRmYjY0OEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21lMDkyNmM2YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21iZmUyYTFjMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb201NGY4NjVlYkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb20wNzZmZmU2YUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb203MDI4M2RiZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21hY2QwMTQ1M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Y19jbGFzc3Jvb21iZTc3MDEyM0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%239E69AF&color=%23F09300&color=%23F6BF26&color=%23D81B60&color=%23009688&color=%237986CB&color=%23009688&color=%23B39DDB&color=%23EF6C00" style="border-width:0" width="1000" height="800" ></iframe>
+  <div>
+  <strong id="result">
+Schema kod: 
+  </strong>
+</div>
+  <script>
+    //check if anythings in local storage and if so, load it
+    if (localStorage.getItem("kod") !== null) {
+      document.getElementById("result").innerHTML = "Här är din kod: " + localStorage.getItem("kod");
+    }
+    //ir not then prompt the user to input text and save it to local storage
+    
+      
+    
+    
+  </script>
+  <!--
+    create a button that when clicked, clears the local storage and reloads the page
+
+  -->
+  <button type="button" onclick="localStorage.clear(); changevalue(); location.reload();">Clear</button>
+  <button type="button" onclick="myFunction()">Kopiera</button>
+  <strong id="kopiera" ></strong>
+  <h1></h1>
+
+  <iframe id="schema" title="Schema" src="https://web.skola24.se/timetable/timetable-viewer/vaxjo.skola24.se/Katedralskolan/" ></iframe>
+  
+</div>
+<div>
+  
+</div>
+<footer id="Om">
+  <strong>mail: info@na22.tk</strong>
+</footer>
+</body>
+
+</html>

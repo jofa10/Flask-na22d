@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+
+<div id="mat" class="content" style="text-align: center">
+    <h1 style="text-align: center">Saklist</h1>
+
+   
+    <table border="Solid" style="text-align: center">
+        <caption>Saker</caption>
+        <tr>
+            <th>
+                Vecka
+            </th>
+            <th>
+                Mat
+            </th>
+        </tr>
+        {% for mat in matsedel %}
+            <tr>
+                <td>
+                  <h1>{{ mat[3] }}</h1>
+                </td>
+                <td>
+                    <h1>{{ mat[0][0] }}</h1>
+                    <h1>{{ mat[0][1] }}</h1>
+                </td>
+        </tr>
+        {% endfor %}
+    
+    </table>
+    
+    
+{% endblock %}
