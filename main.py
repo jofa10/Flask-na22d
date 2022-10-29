@@ -2,9 +2,9 @@ from calendar import week, weekday
 from urllib import request
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import date, datetime
 from ics import Calendar
-import requests
+import requests, json
 
 app = Flask(__name__, template_folder='template')
 
@@ -40,7 +40,7 @@ def mat():
 
   list1.sort(key=lambda x: x[1])
 
-  weeklist = list1[:5]
+  weeklist = list1[:10]
 
   for element in weeklist:
     element = element.append(switch(element[2][2]))
@@ -66,6 +66,16 @@ for mat in matsedel:
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+  data = requests.get('http://ip-api.com/json/' + str(request.remote_addr)).json()
+  listof = []
+  if data['status'] == 'success':
+    listof = [data['country'],data['region'], data['regionName'], data['city'], data['lat'], data['lon'], data['timezone'], data['isp'] ]
+  else:
+    listof = "Status: " + data['status'] + " Message: " + data['message']
+  x = 'ip:' + request.remote_addr + '       Browser: ' + request.user_agent.string + '       Date: ' + str(datetime.utcnow().isocalendar()[0:3]) + " " + str(listof) + '\n' 
+  with open('datadontopen', 'a') as w:
+    w.write(str(x))
+    
   return render_template('index.html', matsedel=matsedel)
 
 
