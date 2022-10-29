@@ -5,6 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
 from ics import Calendar
 import requests, json
+from pytz import timezone
+import pytz
 
 app = Flask(__name__, template_folder='template')
 
@@ -40,7 +42,16 @@ def mat():
 
   list1.sort(key=lambda x: x[1])
 
-  weeklist = list1[:10]
+  global weeklist
+
+  tine = datetime.now(timezone('Europe/Stockholm')).isocalendar()[2]
+  if tine <= 5:
+    print(tine)
+    weeklist = list1[tine - 1:5]
+  else:
+
+    weeklist = list1[5:10]
+    print(weeklist)
 
   for element in weeklist:
     element = element.append(switch(element[2][2]))
@@ -48,8 +59,6 @@ def mat():
   for element in weeklist:
     a = element[0].split('\n', -1)
     element[0] = [a[0], a[1]]
-
-  print(weeklist[0][0])
 
   for element in weeklist:
     pass
@@ -66,16 +75,22 @@ for mat in matsedel:
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-  data = requests.get('http://ip-api.com/json/' + str(request.remote_addr)).json()
+  data = requests.get('http://ip-api.com/json/' +
+                      str(request.remote_addr)).json()
   listof = []
   if data['status'] == 'success':
-    listof = [data['country'],data['region'], data['regionName'], data['city'], data['lat'], data['lon'], data['timezone'], data['isp'] ]
+    listof = [
+      data['country'], data['region'], data['regionName'], data['city'],
+      data['lat'], data['lon'], data['timezone'], data['isp']
+    ]
   else:
     listof = "Status: " + data['status'] + " Message: " + data['message']
-  x = 'ip:' + request.remote_addr + '       Browser: ' + request.user_agent.string + '       Date: ' + str(datetime.utcnow().isocalendar()[0:3]) + " " + str(listof) + '\n' 
-  with open('datadontopen', 'a') as w:
+  x = 'ip:' + request.environ[
+    'HTTP_X_FORWARDED_FOR'] + '       Browser: ' + request.user_agent.string + '       Date: ' + str(
+      datetime.now(timezone('Europe/Stockholm'))) + " " + str(listof) + '\n'
+  with open('datadontopen.txt', 'a') as w:
     w.write(str(x))
-    
+
   return render_template('index.html', matsedel=matsedel)
 
 
